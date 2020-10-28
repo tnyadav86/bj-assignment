@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Bj Application</string>
+    <string name="sources">Sources</string>
+    <string name="all_news">All News</string>
+    <string name="title_activity_splash">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

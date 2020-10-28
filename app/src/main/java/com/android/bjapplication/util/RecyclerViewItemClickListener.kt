@@ -1,4 +1,4 @@
-package com.android.bjapplication
+package com.android.bjapplication.util
 
 interface RecyclerViewItemClickListener {
     fun onItemClick(data: Any?)
