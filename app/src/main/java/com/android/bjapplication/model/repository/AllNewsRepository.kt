@@ -7,4 +7,7 @@ import javax.inject.Inject
 class AllNewsRepository @Inject constructor(
     private val allNewsLocalDataSource: AllNewsLocalDataSource,
     private val allNewsRemoteDataSource: AllNewsRemoteDataSource
-)
+){
+
+
+}
