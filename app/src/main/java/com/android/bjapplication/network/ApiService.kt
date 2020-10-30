@@ -18,7 +18,8 @@ interface ApiService {
 
     @GET("v2/sources")
     fun fetchSource(
-        @Query("country") country: String = "in",
+        @Query("language") language: String = "en",
+        @Query("category") category: String = "technology",
         @Query("apiKey") apiKey: String
     ): Call<SourceListResponse>
 
