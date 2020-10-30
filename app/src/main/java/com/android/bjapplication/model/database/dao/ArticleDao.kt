@@ -14,6 +14,9 @@ interface ArticleDao{
     @Query("SELECT * from Article")
     fun getArticle(): DataSource.Factory<Int, Article>
 
+    @Query("SELECT * from Article WHERE  id = :id")
+    fun getArticleBySource(id:String): DataSource.Factory<Int, Article>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(articleList: List<Article>)
 

@@ -2,10 +2,12 @@ package com.android.bjapplication.model.datasource
 
 import com.android.bjapplication.model.Source
 import com.android.bjapplication.network.ApiService
+import com.android.bjapplication.network.Constants.INTERNET_ERROR
 import com.android.bjapplication.network.Constants.SERVER_ERROR
 import com.android.bjapplication.network.DataResult
 import com.android.bjapplication.util.isError
 import com.android.bjapplication.util.isSuccess
+import org.json.JSONObject
 import java.io.IOException
 import javax.inject.Inject
 
@@ -30,11 +32,12 @@ class SourceRemoteDataSource @Inject constructor(
                 } ?: return DataResult.Error(SERVER_ERROR)
 
             } else {
-                return DataResult.Error(SERVER_ERROR)
+                val jObjError = JSONObject(response.errorBody()!!.string())
+                DataResult.Error(jObjError.getString("message"))
             }
         } catch (e: Exception) {
             if (e is IOException) {
-                return DataResult.Error(SERVER_ERROR)
+                return DataResult.Error(INTERNET_ERROR)
             } else {
                 return DataResult.Error(SERVER_ERROR)
             }

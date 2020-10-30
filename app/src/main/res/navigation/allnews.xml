@@ -27,5 +27,18 @@
         android:id="@+id/allNewsFragment"
         android:name="com.android.bjapplication.ui.AllNewsFragment"
         android:label="@string/all_news"
-        tools:layout="@layout/all_news_fragment" />
+        tools:layout="@layout/all_news_fragment" >
+        <action
+            android:id="@+id/action_allNewsFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.android.bjapplication.ui.DetailFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
 </navigation>

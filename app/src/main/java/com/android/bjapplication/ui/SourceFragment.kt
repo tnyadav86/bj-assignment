@@ -9,17 +9,25 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.bjapplication.R
 import com.android.bjapplication.model.Source
+import com.android.bjapplication.network.Constants
 import com.android.bjapplication.network.DataResult
 import com.android.bjapplication.util.RecyclerViewItemClickListener
 import com.android.bjapplication.util.gone
+import com.android.bjapplication.util.isNetworkConnected
 import com.android.bjapplication.util.visible
 import com.android.bjapplication.viewmodel.SourceFragmentViewModel
+import kotlinx.android.synthetic.main.all_news_fragment.*
 import kotlinx.android.synthetic.main.source_fragment.*
+import kotlinx.android.synthetic.main.source_fragment.errorInfo
+import kotlinx.android.synthetic.main.source_fragment.progressBar
+import kotlinx.android.synthetic.main.source_fragment.recyclerView
+import kotlinx.android.synthetic.main.source_fragment.swipeRefreshLayout
 import javax.inject.Inject
 
 class SourceFragment : BaseDaggerFragment(), RecyclerViewItemClickListener {
@@ -42,6 +50,7 @@ class SourceFragment : BaseDaggerFragment(), RecyclerViewItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         swipeRefreshLayout.apply {
             setOnRefreshListener {
+
                 isRefreshing=true
                 viewModel.fetchSource()
 
@@ -79,8 +88,13 @@ class SourceFragment : BaseDaggerFragment(), RecyclerViewItemClickListener {
 
     override fun onItemClick(data: Any?) {
         when(data){
-            is Source ->{Toast.makeText(appCompatActivity,data.toString(),Toast.LENGTH_LONG).show()}
+            is Source ->{
+                val action =  SourceFragmentDirections.actionSourceFragmentToTopNewsNewsFragment(data.id)
+                findNavController().navigate(action)
+            }
+
         }
+
     }
 
 }

@@ -28,5 +28,29 @@
         android:id="@+id/sourceFragment"
         android:name="com.android.bjapplication.ui.SourceFragment"
         android:label="@string/sources"
-        tools:layout="@layout/source_fragment" />
+        tools:layout="@layout/source_fragment" >
+        <action
+            android:id="@+id/action_sourceFragment_to_topNewsNewsFragment"
+            app:destination="@id/topNewsNewsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/topNewsNewsFragment"
+        android:name="com.android.bjapplication.ui.TopNewsNewsFragment"
+        android:label="Top News" >
+        <argument
+            android:name="source"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_topNewsNewsFragment_to_detailFragment3"
+            app:destination="@id/detailFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment3"
+        android:name="com.android.bjapplication.ui.DetailFragment"
+        android:label="Detail"
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
 </navigation>

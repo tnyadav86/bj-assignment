@@ -14,7 +14,7 @@ import com.android.bjapplication.model.database.dao.ArticleDao
     entities = arrayOf(
         Source::class,
         Article::class
-    ), version = 1
+    ), version = 2
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun articleDao(): ArticleDao

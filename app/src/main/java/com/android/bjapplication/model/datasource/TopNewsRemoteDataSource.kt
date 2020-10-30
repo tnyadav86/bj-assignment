@@ -13,18 +13,18 @@ import java.io.IOException
 import javax.inject.Inject
 
 
-class AllNewsRemoteDataSource @Inject constructor(
+class TopNewsRemoteDataSource @Inject constructor(
     private val service: ApiService,
     private val apiKey: String
 ) {
 
     fun getAllNewsAPI(
-        page: String, perPage: String,
+        page: String, perPage: String,source:String,
         onSuccess: (articleListResponse: ArticleListResponse) -> Unit,
         onError: (error: String) -> Unit
     ) {
 
-        val call = service.fetchArticles(page = page, pageSize = perPage, apiKey = apiKey)
+        val call = service.fetchHeadLines(page = page, pageSize = perPage,sources = source, apiKey = apiKey)
 
         call.enqueue(object : retrofit2.Callback<ArticleListResponse> {
             override fun onFailure(call: Call<ArticleListResponse>, t: Throwable) {

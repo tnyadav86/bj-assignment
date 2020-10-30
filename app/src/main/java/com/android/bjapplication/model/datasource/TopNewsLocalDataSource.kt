@@ -5,7 +5,7 @@ import com.android.bjapplication.model.Article
 import com.android.bjapplication.model.database.dao.ArticleDao
 import javax.inject.Inject
 
-class AllNewsLocalDataSource @Inject constructor(private val articleDao: ArticleDao){
+class TopNewsLocalDataSource @Inject constructor(private val articleDao: ArticleDao){
 
     fun insertArticle(articleList: List<Article>) {
         articleDao.insertAll(articleList)
@@ -15,7 +15,7 @@ class AllNewsLocalDataSource @Inject constructor(private val articleDao: Article
         articleDao.deleteAll()
     }
 
-    suspend fun getArticle(): DataSource.Factory<Int, Article> {
-        return articleDao.getArticle()
+    suspend fun getArticle(source:String): DataSource.Factory<Int, Article> {
+        return articleDao.getArticleBySource(source)
     }
 }

@@ -7,8 +7,8 @@ import javax.inject.Inject
 
 class SourceLocalDataSource @Inject constructor(private val sourceDao: SourceDao){
 
-    fun insertSource(photoList: List<Source>) {
-        sourceDao.insertAll(photoList)
+    fun insertSource(sourceList: List<Source>) {
+        sourceDao.insertAll(sourceList)
     }
 
     fun deleteSource() {

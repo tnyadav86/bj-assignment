@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.android.bjapplication.R
 import com.android.bjapplication.model.Article
 import com.android.bjapplication.network.Constants
@@ -17,15 +18,18 @@ import com.android.bjapplication.util.gone
 import com.android.bjapplication.util.isNetworkConnected
 import com.android.bjapplication.util.visible
 import com.android.bjapplication.viewmodel.AllNewsFragmentViewModel
+import com.android.bjapplication.viewmodel.SourceFragmentViewModel
+import com.android.bjapplication.viewmodel.TopNewsFragmentViewModel
 import kotlinx.android.synthetic.main.all_news_fragment.*
 import javax.inject.Inject
 
-class AllNewsFragment : BaseDaggerFragment(), RecyclerViewItemClickListener {
+class TopNewsNewsFragment : BaseDaggerFragment(), RecyclerViewItemClickListener {
+    private val args: TopNewsNewsFragmentArgs by navArgs()
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProvider.Factory
 
-    private val viewModel: AllNewsFragmentViewModel by lazy {
-        ViewModelProvider(this, viewModelProviderFactory).get(AllNewsFragmentViewModel::class.java)
+    private val viewModel: TopNewsFragmentViewModel by lazy {
+        ViewModelProvider(this, viewModelProviderFactory).get(TopNewsFragmentViewModel::class.java)
     }
     private val taskStatusDataObserver = Observer<TaskStatusResult> {
         val result = it ?: return@Observer
@@ -39,13 +43,7 @@ class AllNewsFragment : BaseDaggerFragment(), RecyclerViewItemClickListener {
             }
 
             is TaskStatusResult.Error -> {
-                result.errorMessage?.let { it1 ->
-                    Toast.makeText(
-                        appCompatActivity,
-                        it1,
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+                result.errorMessage?.let { it1 ->  Toast.makeText(appCompatActivity,it1, Toast.LENGTH_LONG).show() }
                 progressBar.gone()
             }
         }
@@ -56,13 +54,13 @@ class AllNewsFragment : BaseDaggerFragment(), RecyclerViewItemClickListener {
         when (it) {
 
             is TaskStatusResult.Success -> {
-                swipeRefreshLayout.isRefreshing = false
+                swipeRefreshLayout.isRefreshing=false
 
             }
 
             is TaskStatusResult.Error -> {
-                swipeRefreshLayout.isRefreshing = false
-                Toast.makeText(appCompatActivity, it.errorMessage, Toast.LENGTH_LONG).show()
+                swipeRefreshLayout.isRefreshing=false
+                Toast.makeText(appCompatActivity,it.errorMessage, Toast.LENGTH_LONG).show()
             }
         }
 
@@ -80,9 +78,8 @@ class AllNewsFragment : BaseDaggerFragment(), RecyclerViewItemClickListener {
         val articleRecyclerViewAdapter = ArticleRecyclerViewAdapter(this)
         recyclerView.adapter = articleRecyclerViewAdapter
         swipeRefreshLayout.setOnRefreshListener {
-
-            swipeRefreshLayout.isRefreshing = true
-            viewModel.refreshArticle().observe(viewLifecycleOwner, refreshTaskStatusDataObserver)
+            swipeRefreshLayout.isRefreshing =true
+            viewModel.refreshArticle(args.source).observe(viewLifecycleOwner,refreshTaskStatusDataObserver)
         }
 
         viewModel.articleListLivedata.observe(viewLifecycleOwner, Observer {
@@ -90,26 +87,25 @@ class AllNewsFragment : BaseDaggerFragment(), RecyclerViewItemClickListener {
             progressBar.gone()
             articleRecyclerViewAdapter.submitList(result)
 
+
         })
         viewModel.taskStatusLiveData.observe(viewLifecycleOwner, taskStatusDataObserver)
 
-        viewModel.getArticle()
-        progressBar.visible()
+        viewModel.getArticle(args.source)
+
     }
 
     override fun onItemClick(data: Any?) {
-        when (data) {
-            is Article -> {
-                val action = data.url?.let {
-                    AllNewsFragmentDirections.actionAllNewsFragmentToDetailFragment(
-                        it
-                    )
-                }
-                if (action != null) {
-                    findNavController().navigate(action)
-                }
-            }
-        }
+         when(data){
+             is Article ->{
+                 val action = data.url?.let {
+                     TopNewsNewsFragmentDirections.actionTopNewsNewsFragmentToDetailFragment3(it)
+                 }
+                 if (action != null) {
+                     findNavController().navigate(action)
+                 }
+             }
+         }
     }
 
 }

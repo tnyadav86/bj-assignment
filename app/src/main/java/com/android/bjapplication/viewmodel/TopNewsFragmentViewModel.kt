@@ -6,13 +6,13 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import com.android.bjapplication.model.Article
-import com.android.bjapplication.model.repository.AllNewsRepository
+import com.android.bjapplication.model.repository.TopNewsRepository
 import com.android.bjapplication.util.PageListRepoResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AllNewsFragmentViewModel @Inject constructor(private val allNewsRepository :AllNewsRepository): ViewModel() {
+class TopNewsFragmentViewModel @Inject constructor(private val topNewsRepository : TopNewsRepository): ViewModel() {
     private val allNewsRepoResult = MutableLiveData<PageListRepoResult<PagedList<Article>>>()
 
     val articleListLivedata = allNewsRepoResult.switchMap {
@@ -22,13 +22,13 @@ class AllNewsFragmentViewModel @Inject constructor(private val allNewsRepository
         it.taskStatus
     }
 
-    fun getArticle() {
+    fun getArticle(source:String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val data = allNewsRepository.getArticle()
+            val data = topNewsRepository.getArticle(source)
             allNewsRepoResult.postValue(data)
         }
 
     }
 
-    fun refreshArticle() = allNewsRepository.refreshArticle()
+    fun refreshArticle(source:String) = topNewsRepository.refreshArticle(source)
 }

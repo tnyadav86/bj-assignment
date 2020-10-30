@@ -4,22 +4,30 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.view.View
 import android.widget.ImageView
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.android.bjapplication.R
+import com.android.bjapplication.model.ArticleListResponse
 import com.android.bjapplication.model.SourceListResponse
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import org.joda.time.*
+import java.text.SimpleDateFormat
 
-fun SourceListResponse.isSuccess():Boolean{
-    return status=="ok"
+fun SourceListResponse.isSuccess(): Boolean {
+    return status == "ok"
 }
 
-fun SourceListResponse.isError():Boolean{
-    return status=="error"
+fun SourceListResponse.isError(): Boolean {
+    return status == "error"
+}
+
+fun ArticleListResponse.isSuccess(): Boolean {
+    return status == "ok"
+}
+
+fun ArticleListResponse.isError(): Boolean {
+    return status == "error"
 }
 
 fun View.visible() {
@@ -51,5 +59,54 @@ fun ImageView.loadImage(url: String?) {
 
 
 }
+
 val Context.isNetworkConnected: Boolean
     get() = (getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager)?.activeNetworkInfo?.isConnected == true
+
+fun String.getAge(): String {
+    var age = this
+    try {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
+        val date = inputFormat.parse(this)
+        val longTime = date.time
+        val dt1 = Instant(longTime)
+        val dt2 = Instant(System.currentTimeMillis())
+
+        val thours = Hours.hoursBetween(dt1, dt2).hours
+        val tminutes = Minutes.minutesBetween(dt1, dt2).minutes
+        val tseconds = Seconds.secondsBetween(dt1, dt2).seconds
+        val tdays = Days.daysBetween(dt1, dt2).days
+
+        val hours = thours % 24
+        val minutes = tminutes % 60
+        val seconds = tseconds % 60
+
+        if (tdays > 0) {
+            if (tdays === 1) {
+                age = "$tdays day ago"
+            } else {
+                age = "$tdays days ago"
+            }
+            return age
+        } else if (hours > 0) {
+            if (hours === 1) {
+                age = "$hours hour ago"
+            } else {
+                age = "$hours hours ago"
+            }
+            return age
+        } else if (minutes > 0) {
+            if (minutes === 1) {
+                age = "$minutes minute ago"
+            } else {
+                age = "$minutes minutes ago"
+            }
+            return age
+        } else if (seconds > 0) {
+            age = "Just Now"
+
+        }
+    } catch (e: Exception) {
+    }
+    return age
+}

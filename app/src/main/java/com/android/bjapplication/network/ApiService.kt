@@ -10,9 +10,10 @@ interface ApiService {
    //TODO
     @GET("v2/top-headlines")
     fun fetchHeadLines(
-       @Query("country") country: String = "in",
        @Query("language") language: String = "en",
-       @Query("language") sources: String,
+       @Query("page") page: String,
+       @Query("pageSize") pageSize: String,
+       @Query("sources") sources: String,
        @Query("apiKey") apiKey: String
    ): Call<ArticleListResponse>
 
@@ -27,6 +28,9 @@ interface ApiService {
     fun fetchArticles(
         @Query("language") sources: String="en",
         @Query("sortBy") sortBy: String = "publishedAt",
+        @Query("q") q: String = "India",
+        @Query("page") page: String,
+        @Query("pageSize") pageSize: String,
         @Query("apiKey") apiKey: String
     ): Call<ArticleListResponse>
 

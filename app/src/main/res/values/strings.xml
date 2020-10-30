@@ -5,5 +5,8 @@
     <string name="title_activity_splash">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="api_key">b4ace1a3280c46d5be8a4624b7634658</string>
+    <!--    <string name="api_key">b4ace1a3280c46d5be8a4624b7634658</string>-->
+    <string name="api_key">c48890e4dcb549dba9a11bf215e54669</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

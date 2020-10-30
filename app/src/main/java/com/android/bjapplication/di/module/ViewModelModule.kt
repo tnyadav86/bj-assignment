@@ -6,6 +6,7 @@ import com.android.bjapplication.di.ViewModelKey
 import com.android.bjapplication.viewmodel.AllNewsFragmentViewModel
 import com.android.bjapplication.viewmodel.SourceFragmentViewModel
 import com.android.bjapplication.di.factory.AppViewModelFactory
+import com.android.bjapplication.viewmodel.TopNewsFragmentViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -27,5 +28,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AllNewsFragmentViewModel::class)
     abstract fun bindAllNewsFragmentViewModel(viewmodel: AllNewsFragmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TopNewsFragmentViewModel::class)
+    abstract fun bindTopNewsFragmentViewModel(viewmodel: TopNewsFragmentViewModel): ViewModel
 
 }
