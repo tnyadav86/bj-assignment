@@ -68,6 +68,7 @@ class SourceFragment : BaseDaggerFragment(), RecyclerViewItemClickListener {
             val result = it ?: return@Observer
             swipeRefreshLayout.isRefreshing=false
             progressBar.gone()
+            errorInfo.gone()
             viewAdapter.updateItem(result)
 
         })
@@ -77,7 +78,9 @@ class SourceFragment : BaseDaggerFragment(), RecyclerViewItemClickListener {
             swipeRefreshLayout.isRefreshing=false
             if (viewAdapter.itemCount==0){
                 errorInfo.text = result
+                errorInfo.visible()
             }else{
+                errorInfo.gone()
                 Toast.makeText(appCompatActivity,result,Toast.LENGTH_LONG).show()
             }
 
