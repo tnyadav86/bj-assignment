@@ -63,14 +63,14 @@ fun ImageView.loadImage(url: String?) {
 val Context.isNetworkConnected: Boolean
     get() = (getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager)?.activeNetworkInfo?.isConnected == true
 
-fun String.getAge(): String {
+fun String.getAge(currentDate : Long?=System.currentTimeMillis()): String {
     var age = this
     try {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
         val date = inputFormat.parse(this)
         val longTime = date.time
         val dt1 = Instant(longTime)
-        val dt2 = Instant(System.currentTimeMillis())
+        val dt2 = Instant(currentDate)
 
         val thours = Hours.hoursBetween(dt1, dt2).hours
         val tminutes = Minutes.minutesBetween(dt1, dt2).minutes
